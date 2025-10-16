@@ -5,20 +5,23 @@ import { Session } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
 type Props = {
-    user: Session['user']
+    userInfo: {
+        name: string | null,
+        image: string | null
+    } | null
 }
 export default function UserMenu({
-    user,
+    userInfo,
 }: Props) {
     return (
         <Dropdown placement='bottom-end'>
             <DropdownTrigger>
-                <Avatar isBordered as='button' className='transition-transform' color='default' name={user?.name || 'user avatar'} size='sm' src={user?.image || '/images/user.jpg'}></Avatar>
+                <Avatar isBordered as='button' className='transition-transform' color='default' name={userInfo?.name || 'user avatar'} size='sm' src={userInfo?.image || '/images/user.jpg'}></Avatar>
             </DropdownTrigger>
             <DropdownMenu variant='flat' aria-label='user actions menu'>
                 <DropdownSection showDivider>
                     {/* @ts-ignore */}
-                    <DropdownItem isReadOnly as='span' className='h-14 flex flex-row' aria-label='username'>signed in as {user?.name}</DropdownItem>
+                    <DropdownItem isReadOnly as='span' className='h-14 flex flex-row' aria-label='username'>signed in as {userInfo.name}</DropdownItem>
                 </DropdownSection>
                 {/* @ts-ignore */}
                 <DropdownItem as={Link} href='/members/edit'>edit profile</DropdownItem>

@@ -32,7 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../not-found.tsx"
+    "../not-found.tsx",
+    "src/app/hooks/useNotificationChannel.ts",
+    "src/app/hooks/useMessageStore.ts"
   ],
   "exclude": [
     "node_modules"

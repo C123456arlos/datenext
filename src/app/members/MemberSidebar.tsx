@@ -5,23 +5,18 @@ import { Member } from '@prisma/client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import PresenceDot from '../components/PresenceDot'
 type Props = {
     member: Member
     navLinks: { name: string; href: string }[]
 }
 export default function MemberSidebar({
-    member
+    member, navLinks
 }: Props) {
     const pathname = usePathname()
-    const basePath = `/members/${member.userId}`
-    const navLinks = [
-        { name: 'profile', href: `${basePath}` },
-        { name: 'photos', href: `${basePath}/photos` },
-        { name: 'chat', href: `${basePath}/chat` }
-    ]
     return (
         <Card className='w-full mt-10 items-center h-[80vh]'>
-            <Image height={200} width={200} src={member.image || '/images/user/png'} alt='user profile'
+            <Image height={200} width={200} src={member.image || '/images/user.jpg'} alt='user profile'
                 className='rounded-full mt-6 aspect-square object-cover'></Image>
             <CardBody className='overflow-hidden'>
                 <div className='flex flex-col items-center'>
@@ -30,9 +25,9 @@ export default function MemberSidebar({
                             {member.name}, {' '}
                             {calculateAge(member.dateOfBirth)}
                         </div>
-                        {/* <div> */}
-                        {/* <PresenceDot member={member}></PresenceDot> */}
-                        {/* </div> */}
+                        <div>
+                            <PresenceDot member={member}></PresenceDot>
+                        </div>
                     </div>
                     <div className='text-sm text-neutral-500'>
                         {member.city}, {member.country}
@@ -52,3 +47,8 @@ export default function MemberSidebar({
         </Card>
     )
 }
+
+
+
+
+

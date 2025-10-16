@@ -6,6 +6,8 @@ import { GiSelfLove } from 'react-icons/gi'
 import NavLink from './NavLink'
 import { auth } from '@/auth'
 import UserMenu from './UserMenu'
+import { getUserInfoForNav } from '@/app/actions/userActions'
+import FiltersWrapper from './FIltersWrapper'
 // import NavLink from './NavLink'
 // import { auth } from '@/auth'
 // import UserMenu from './UserMenu'
@@ -13,7 +15,7 @@ import UserMenu from './UserMenu'
 // import FiltersWrapper from './FiltersWrapper'
 export default async function TopNav() {
     const session = await auth()
-    // const userInfo = session?.user && (await getUserInfoForNav())
+    const userInfo = session?.user && (await getUserInfoForNav())
 
     // const memberLinks = [
     //     { href: '/members', label: 'Matches' },
@@ -26,8 +28,19 @@ export default async function TopNav() {
     //         label: 'Photo Moderation',
     //     }
     // ]
-    // const links =
-    // session?.user.role === 'ADMIN' ? adminLinks : memberLinks
+
+    const memberLinks = [
+        { href: '/members', label: 'matches' },
+        { href: '/lists', label: 'lists' },
+        { href: '/messages', label: 'messages' }
+    ]
+    const adminLinks = [
+        {
+            href: '/admin/moderation',
+            label: 'photo moderation'
+        }
+    ]
+    const links = session?.user.role === 'ADMIN' ? adminLinks : memberLinks
     return (
         <>
 
@@ -40,20 +53,23 @@ export default async function TopNav() {
                     </div>
                 </NavbarBrand>
                 <NavbarContent justify='center'>
+                    {/* no key found for item
                     <NavLink href='/members' label='matches'></NavLink>
                     <NavLink href='/lists' label='lists'></NavLink>
-                    <NavLink href='/messages' label='messages'></NavLink>
-                    {/* {session && links.map((item) => (<NavLink key={item.href} href={item.href} label={item.label}></NavLink>))} */}
+                    <NavLink href='/messages' label='messages'></NavLink> */}
+                    {session && links.map((item) => (
+                        <NavLink key={item.href} href={item.href} label={item.label}></NavLink>
+                    ))}
                 </NavbarContent>
                 <NavbarContent justify='end'>
-                    {session?.user ? (<UserMenu user={session.user}></UserMenu>) : (
+                    {userInfo ? (<UserMenu userInfo={userInfo}></UserMenu>) : (
                         <><Button
                             as={Link} href='/login' variant='bordered' className='text-white'>login</Button>
                             <Button as={Link} href='/register' variant='bordered' className='text-white'>register</Button></>
                     )}
                 </NavbarContent>
             </Navbar>
-            {/* <FiltersWrapper></FiltersWrapper> */}
+            <FiltersWrapper></FiltersWrapper>
         </>
     )
 }

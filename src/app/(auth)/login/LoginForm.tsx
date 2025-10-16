@@ -1,5 +1,5 @@
 'use client'
-import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react'
+import { Button, Card, CardBody, CardHeader, Input, Link } from '@nextui-org/react'
 import React from 'react'
 import { GiPadlock } from 'react-icons/gi'
 import { useForm } from 'react-hook-form'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { signInUser } from '@/app/actions/authActions'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import SocialLogin from './SocialLogin'
 export default function LoginForm() {
     const { register, handleSubmit, formState: { isValid, errors } } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
@@ -42,9 +43,9 @@ export default function LoginForm() {
                         <Input defaultValue='' label='email' {...register('email')} isInvalid={!!errors.email} errorMessage={errors.email?.message as string} variant='bordered'></Input>
                         <Input defaultValue='' label='password' {...register('password')} variant='bordered' type='password' isInvalid={!!errors.password} errorMessage={errors.password?.message as string}></Input>
                         <Button fullWidth color='default' type='submit' isDisabled={!isValid}>login</Button>
-                        {/* <SocialLogin></SocialLogin> */}
+                        <SocialLogin></SocialLogin>
                         <div className='flex justify-center hover:underline text-sm'>
-                            {/* <Link href='/forgot-password'></Link> */}
+                            <Link href='/forgot-password'>forgot password</Link>
                         </div>
                     </div>
                 </form>
@@ -54,8 +55,6 @@ export default function LoginForm() {
 
     )
 }
-
-// 1:07
 
 
 
